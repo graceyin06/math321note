@@ -1,0 +1,52 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{extarrows}
+\usepackage{amssymb} 
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{lipsum} % for filler text
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}[section]
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+% bfseries
+\rhead{\bfseries MATH321 Note, February 13th}
+\lfoot{Grace Yin}
+\rfoot{\thepage}
+\renewcommand{\footrulewidth}{0.4pt}
+\begin{document}
+
+\textbf{Functions of bounded variation}
+$\alpha: [a,b] \xrightarrow{}\mathbb{R}$ is in $BV[a,b]$ if $V_{a}^{b}\alpha=\sup_{P \ partition}V_{a}^{b}(\alpha,P)=\sup_{P}\sum_{i=1}^{n}|\alpha(x_i)-\alpha(x_{i-1})|<\infty$
+\begin{theorem}
+(Jordan's theorem:) $\alpha \in BV[a,b]$ if and only if $\alpha$ can be written as $\alpha=\beta-\gamma$ with $\beta, \gamma$non-decreasing.
+\end{theorem}
+\begin{proof}
+$\Leftarrow$\\Assume $\alpha=\beta-\gamma$ with $\beta, \gamma: \xrightarrow{non\ decreasing}\mathbb{R}$. Let $P=\{a=x_0<x_1<\cdots<x_n=b\}$.$$V_{a}^{b}(\alpha,P)=\sum_{i=1}^{n}|\alpha(x_i)-\alpha(x_{i-1})|=\sum_{i=1}^{n}|[\beta(x_i)-\beta(x_{i-1})]-[\gamma(x_i)-\gamma(x_{i-1})]|$$$$\le\sum_{i=1}^{n}|\beta(x_i)-\beta(x_{i-1})|+\sum_{i=1}^{n}|\gamma(x_i)-\gamma(x_{i-1})|=V_{a}^{n}(\beta,P)+V_{a}^{b}(\gamma,P)\le V_{a}^{b}\beta+V_{a}^{b}\gamma$$$$=\underbrace{[\beta(b)-\beta(a)]+[\gamma(b)-\gamma(a)]}_{independent \ of \ P}<\infty$$Hence, $$V_{a}^{b}\alpha=\sup V_{a}^{b}(\alpha,P)\le [\beta(b)-\beta(a)]+[\gamma(b)-\gamma(a)] <\infty$$
+
+\textbf{Exs:} If $f,g \in BV[a,b]$, then $V_{a}^{b}(f\pm g)\le V_{a}^{b}f+V_{a}^{b}g$ \\
+$\Rightarrow:$ Assume that $\alpha \in BV[a,b]$, need to find $\beta,\gamma$ such that $\alpha=\beta-\gamma (\gamma=\beta-\alpha)$. Introduce the variation function $v(x)=V_{a}^{x}\alpha$=total variation of $\alpha$ on $[a,x]$.\\
+\textbf{Exs:}$V(x)$ is well-defined because $V_{a}^{x}\alpha \ge V_{c}^{d}\alpha$ for any interval $[c,d]\subseteq [a,b]$.\\
+\textbf{Question:} Is $v$ non-decreasing? Yes! Let $x<y,$ need to verify if $$\underbrace{v(x)}_{=V_{a}^{x}\alpha}\le \underbrace{v(y)}_{V_{a}^{y}\alpha}.$$ True by Exs above since $[a,b]\subseteq[a,y]$\\ \textbf{Question}: Is $V(x_i)-\alpha(x_i)$ non-decreasing? Let $x<y$, need to verify if $v(x)-\alpha(x)\le v(y)-\alpha(y)\Leftrightarrow \alpha(y)-\alpha(x)\le \underbrace{v(y)-v(x)}_{V_{a}^{y}\alpha-V_{a}^{x}\alpha=V_{x}^{y}\alpha=V_{x}^{y}\alpha=\sup_{P partition \ of\ [x,y] }V_{x}^{y}(\alpha,P)}$\\Note:$|\alpha(y)-\alpha(x)|=V_{x}^{y}(\alpha,P_0)$, where $P_0=\{x,y\}$. Thus, $\alpha(y)-\alpha(x)\le |\alpha(y)-\alpha(x)|=V_{x}^{y}(\alpha,P_0)\le V_{x}^{y}\alpha=v(y)-v(x)$.\\ \textbf{Exs:}
+Check that for any $c \in (a,b)$ and any $f \in BV[a,b]$,$$V_{a}^{c}f+V_{c}^{a}f=V_{a}^{b}f$$
+Set $\beta(x)=v(x), \gamma(x)=v(x)-\alpha(x)$. Clearly, $\alpha=\beta-\gamma$
+\end{proof}
+\textbf{Remark:}Jordan's theorem suggests that $BV[a,b]$ could be a good source of Riemann-Stieltjes integrators, with respect to which continuous functions functions on $[a,b]$ can be integrated $$\int f d\underbrace{\alpha}_{\in BV}=\int f d(\beta-\gamma)\overset{?}{=}\int f d\beta -\int f d\gamma$$
+\textbf{Interchanging integrals \& integrators}
+\\Recall: $$\int_{a}^{b}\left(\underbrace{udv}_{u(x)v'(x)dx}+\underbrace{vdu}_{v'(x)u'(x)dx}\right)=u(b)v(b)-u(a)v(a)\xrightarrow{} integration\ by\ parts$$\\
+\textbf{Integration by parts for Riemann-Stieltjes integrals:}
+Let $f,\alpha:[a,b] \to \mathbb{R}$ be arbitrary functions. Then $f \in \mathcal{R}_{\alpha}[a,b] \Leftrightarrow  \alpha \in \mathcal{R}_{f}[a,b]$ ($f\in \mathcal{R}_{\alpha}[a,b]\Leftrightarrow \exists I \to, \forall \varepsilon >0, \exists$ a partition $P_0$, s.t., $|S_{\alpha}(f,P,T)-I|<\varepsilon,$ for $P \supseteq P_0$, and any selection of points subordinate to $P$)\\In either case:$$\int_{a}^{b}fd\alpha+\int_{a}^{b}\alpha df=\alpha(b)f(b)-\alpha(a)f(a)$$
+\begin{corollary}
+$\mathcal{C}[a,b]\subseteq \mathcal{R}_{\alpha}[a,b]$ for all $\alpha \in BV[a,b]$
+\begin{proof}
+Use the Jordan's theorem to write $\alpha=\beta-\gamma$ where $\beta$ and $\gamma$ are non-decreasing. Note by a previous theorem, $\mathcal{C}[a,b]\subseteq \mathcal{R}_{\beta}[a,b]\cap \mathcal{R}_{\gamma}[a,b]$. This implies if $f \in \mathcal{C}[a,b],$then $$\int_{a}^{b}f d \beta\& \int_{a}^{b} f d\gamma are\ well-defined$$By IBP, $$\int_{a}^{b}\beta df \& \int_{a}^{b} \gamma d f are\ well-defined\ too.$$i.e., $\beta, \gamma \in \mathcal{R}_{f}[a,b]$. But it is easy to see that $\mathcal{R}_{f}[a,b]$ is a vector space, with $$\int_{a}^{b}(\beta \mp \gamma)df$$This implies $\beta \mp \gamma \in \mathcal{R}_{f}[a,b]$. In particular, $\alpha=\beta-\gamma \in \mathcal{R}_{f}[a,b]$. Use IBP again, get $f \in \mathcal{R}_{\alpha}[a,b]$
+\end{proof}
+\end{corollary}
+\end{document}
